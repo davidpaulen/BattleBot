@@ -1,0 +1,51 @@
+CHEESSLICER – KOPLINGAR (Pico 2 W)
+
+VENSTRE MOTOR – IBT-2
+RPWM  → GP2
+LPWM  → GP3
+R_EN  → GP4
+L_EN  → GP5
+
+HØGRE MOTOR – IBT-2
+RPWM  → GP6
+LPWM  → GP7
+R_EN  → GP8
+L_EN  → GP9
+
+MOTTAKAR – FlySky FS-iA10B
+iBUS  → GP13 (UART0 RX / Serial1)
+VCC   → 5 V
+GND   → GND
+
+IMU – BNO085
+SDA   → GP18 (I2C1 / Wire1)
+SCL   → GP19 (I2C1 / Wire1)
+VCC   → 3,3 V
+GND   → GND
+PS0   → GND
+PS1   → GND
+AD0   → GND
+CS    → Ikkje tilkopla
+INT   → Ikkje tilkopla
+RST   → Ikkje tilkopla
+
+BLDC-SPINNER – ESC
+Signal → Ikkje stadfesta GPIO
+GND    → Felles GND
+
+STRAUMFORSYNING
+NiMH-batteri → IBT-2 motorforsyning
+5 V buck     → Pico VSYS, RX og IBT-2 VCC
+Pico 3V3     → IMU VCC
+
+Begge IBT-2:
+B+ / B- → Batteri + / -
+M+ / M- → Motor
+GND     → Felles GND
+R_IS / L_IS → Ikkje tilkopla
+
+VIKTIG:
+- Alle komponentane må ha felles GND.
+- Pico GPIO toler berre 3,3 V.
+- IBT-2 VCC skal ha 5 V.
+- GP18/19 krev Wire1, ikkje Wire.

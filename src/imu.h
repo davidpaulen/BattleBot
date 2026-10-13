@@ -24,7 +24,8 @@ public:
     void updateSensorValues();                  // Hentar all ny info frå IMU-en
     void updateAttitude();
 
-    double getYaw();
+    // Returnerar vinklar i radianar
+    double getYaw();        
     double getPitch();
     double getRoll();
 
@@ -48,7 +49,7 @@ private:
     Point3D magnet;                 // Visar styrken på magnetfelt i x, y og z og er målt i microtesla
 
     Point4D qt;                     // Visar attitude med w som gir rotasjon (w = cos(vinkel/2)) og i, j og k som gir retning på rotasjonen
-    Point4D q0;                     // Referanse 
+    Point4D q0 = {1.0f, 0.0f, 0.0f, 0.0f};                     // Referanse 
     Point4D qRot;                   // Kva ein må gange qIMU med for å få qFly(flyet si orientering)
     Point4D qRel;                   // q relativt til q0. qRel = q0^(-1)*qt
 

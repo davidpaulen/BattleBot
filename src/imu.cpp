@@ -1,15 +1,31 @@
 #include "imu.h"
 
 void IMU::setUp(){
-    Wire.setSDA(sda);
-    Wire.setSCL(scl);
-    Wire.begin();
-    Wire.setClock(400000);
-    bno08x.begin_I2C(0x4A);
-    bno08x.enableReport(SH2_ACCELEROMETER);
-    bno08x.enableReport(SH2_GYROSCOPE_CALIBRATED);
-    bno08x.enableReport(SH2_MAGNETIC_FIELD_CALIBRATED);
-    bno08x.enableReport(SH2_ROTATION_VECTOR);
+    Wire1.setSDA(sda);
+    Wire1.setSCL(scl);
+    Wire1.begin();
+    Wire1.setClock(100000);
+
+    if (!bno08x.begin_I2C(0x4A, &Wire1)) {
+        Serial.println("FEIL: Klarte ikkje starte BNO085!");
+        return;
+    }
+
+    // Serial.println("BNO085 starta!");
+
+    // if (!bno08x.enableReport(SH2_ACCELEROMETER))
+    //     Serial.println("FEIL: Akselerometer");
+
+    // if (!bno08x.enableReport(SH2_GYROSCOPE_CALIBRATED))
+    //     Serial.println("FEIL: Gyroskop");
+
+    // if (!bno08x.enableReport(SH2_MAGNETIC_FIELD_CALIBRATED))
+    //     Serial.println("FEIL: Magnetometer");
+
+    // if (!bno08x.enableReport(SH2_ROTATION_VECTOR))
+    //     Serial.println("FEIL: Rotation Vector");
+
+    // Serial.println("Sensorrapportar konfigurert.");
 }
 
 void IMU::updateSensorValues(){
@@ -38,14 +54,39 @@ void IMU::updateSensorValues(){
         else if(sensorValue.sensorId == SH2_ROTATION_VECTOR){
             qt = {sensorValue.un.rotationVector.real, 
                 sensorValue.un.rotationVector.i, 
-                sensorValue.un.rotationVector.j, 
+                sensorValue.un.rotationVector.j,
                 sensorValue.un.rotationVector.k};
+            //     //test
+            //     static unsigned long lastPrint = 0;
+            // if(millis() - lastPrint >= 500){
+            //     lastPrint = millis();
+
+            //     Serial.print("Quaternion W: ");
+            //     Serial.println(qt.w, 4);
+            // }
+            //     //testslutt
         }
     }    
 }
 
 void IMU::updateAttitude(){
     qRel = qMultiplikasjon(qInverse(q0), qt);
+    //     // test
+    // static unsigned long lastPrint = 0;
+
+    // if(millis() - lastPrint >= 500){
+    //     lastPrint = millis();
+
+    //     Serial.print("q0.w: ");
+    //     Serial.print(q0.w, 4);
+
+    //     Serial.print("  qRel.w: ");
+    //     Serial.print(qRel.w, 4);
+
+    //     Serial.print("  qRel.k: ");
+    //     Serial.println(qRel.k, 4);
+    // }
+    //     // testslutt
     Yaw = atan2(2.0 * (qRel.w*qRel.k + qRel.i*qRel.j), 1.0 - 2.0 * (qRel.j*qRel.j + qRel.k*qRel.k));
     Pitch = asin(constrain(2.0 * (qRel.w*qRel.j - qRel.k*qRel.i), -1.0, 1.0));
     Roll = atan2(2.0 * (qRel.w*qRel.i + qRel.j*qRel.k), 1.0 - 2.0 * (qRel.i*qRel.i + qRel.j*qRel.j));
