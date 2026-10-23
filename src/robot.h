@@ -23,6 +23,7 @@ public:
         driveTank{drivMotorL_, drivMotorR_, rx_},
         driveArcade{drive, rx_}{}
     void update();
+    void stop();
 private:
     BLDC_Motor &spinner;
     Brushed_DC &drivMotorL;
@@ -35,4 +36,5 @@ private:
     DriveArcade driveArcade;
     uint16_t SWC = 0;
     uint16_t SWD = 0;
+    uint16_t SWA = 0;
 };

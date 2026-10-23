@@ -13,7 +13,7 @@ R_EN  → GP8
 L_EN  → GP9
 
 MOTTAKAR – FlySky FS-iA10B
-iBUS  → GP13 (UART0 RX / Serial1)
+iBUS  → GP17 (UART0 RX / Serial1)  // Rx rx(17, Serial1);
 VCC   → 5 V
 GND   → GND
 
@@ -30,7 +30,7 @@ INT   → Ikkje tilkopla
 RST   → Ikkje tilkopla
 
 BLDC-SPINNER – ESC
-Signal → Ikkje stadfesta GPIO
+Signal → Ikkje stadfesta GPIO //placeholder = GP10
 GND    → Felles GND
 
 STRAUMFORSYNING

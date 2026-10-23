@@ -4,6 +4,8 @@ void Robot::update(){
     rx.update();
 
     SWC = rx.getValue(6);
+    SWA = rx.getValue(4);
+    //if(SWA > 1250 || SWA < 900){return;}
 
     if(SWC < 1250){
         SWD = rx.getValue(7);
@@ -19,4 +21,8 @@ void Robot::update(){
     else{
         driveArcade.set();
     }
+}
+
+void Robot::stop(){
+
 }

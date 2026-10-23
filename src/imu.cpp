@@ -108,13 +108,11 @@ Point3D IMU::getW(){
 void IMU::nullstill(){
     for(int i = 0; i < 100; i++){
         updateSensorValues();
+        delay(10);
+    }
 
-        if(qt.w != 0 || qt.i != 0 || qt.j != 0 || qt.k != 0){
-            q0 = qt;
-            return;
-        }
-
-        delay(5);
+    if(qt.w != 0 || qt.i != 0 || qt.j != 0 || qt.k != 0){
+        q0 = qt;
     }
 }
 

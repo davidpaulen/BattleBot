@@ -84,7 +84,7 @@ void DriveIMU::set(){
     
     // Steering
     steering = getSteering();
-    drive.set(trottle, steering);
+    drive.set(trottle, -steering);
 
 
 // static unsigned long lastPrint = 0;
@@ -174,15 +174,15 @@ void DriveTank::stop(){
 
 void DriveArcade::set(){
     int ch2 = rx.getValue(2);
-    int ch1 = rx.getValue(1);
+    int ch0 = rx.getValue(0);
 
-    if(ch2 < 900 || ch2 > 2100 || ch1 < 900 || ch1 > 2100){
+    if(ch2 < 900 || ch2 > 2100 || ch0 < 900 || ch0 > 2100){
         stop();
         return;
     }
 
     trottle = constrain((ch2 - 1500) * 2, -1000, 1000);
-    steering = constrain((ch1 - 1500) * 2, -1000, 1000);
+    steering = constrain((ch0 - 1500) * 2, -1000, 1000);
 
     if(abs(trottle) < 30) trottle = 0;
     if(abs(steering) < 30) steering = 0;

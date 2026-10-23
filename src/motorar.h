@@ -25,11 +25,12 @@ private:
     int resolution = 14;         // 2^resolution -1 moglege verdiar av duty;
     int frequency = 50;
     int speedPersent = 0;
+    int speedPersentMax = 50;
     Motorstatus status = Motorstatus::STOPPED;
     unsigned long statusStartTime = 0;
     int targetSpeedPersent = 0;
-    int deltaSpeedInterval = 20;
-    int lastTimeUpdate = 0;
+    int deltaSpeedInterval = 50;
+    unsigned long lastTimeUpdate = 0;
     Servo esc;
 
     int persentToDuty(int persent);

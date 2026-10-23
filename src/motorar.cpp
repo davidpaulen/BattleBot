@@ -26,10 +26,6 @@ void BLDC_Motor::update(){
 }
 
 void BLDC_Motor::stopp(){
-    if(status == Motorstatus::STOPPED){
-        Serial.println("Motoren er allereide av");
-        return;
-    }
     esc.writeMicroseconds(persentToDuty(0));
     speedPersent = 0;
     targetSpeedPersent = 0;
@@ -60,8 +56,14 @@ void BLDC_Motor::setSpeedPersent(int persent){
         Serial.println("Må starte motoren");
         return;
     }
-    targetSpeedPersent = persent;
+    if(persent >= speedPersentMax){targetSpeedPersent = speedPersentMax;}
+    else{targetSpeedPersent = persent;}
 }
+
+
+
+
+
 
 
 Brushed_DC::Brushed_DC(
