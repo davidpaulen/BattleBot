@@ -1,31 +1,35 @@
- #include <Arduino.h>
- #include "robot.h"
+#include <Arduino.h>
+#include "robot.h"
 
- BLDC_Motor spinner(22, 1);
+BLDC_Motor spinner(22, 1);
 
- Brushed_DC drivL(2, 3, 4, 5, 15.3);
- Brushed_DC drivR(6, 7, 8, 9, 15.3);
+Brushed_DC drivL(2, 3, 4, 5, 15.3);
+Brushed_DC drivR(6, 7, 8, 9, 15.3);
 
- IMU imu(18, 19);
- Rx rx(17, Serial1);
+IMU imu(18, 19);
+Rx rx(17, Serial1);
 
- Robot Cheezslicer(spinner, drivL, drivR, rx, imu);
+Robot Cheezslicer(spinner, drivL, drivR, rx, imu);
 
- void setup(){
-     Serial.begin(115200);
+void setup(){
+    Serial.begin(115200);
 
-     spinner.setUp();
-     drivL.begin();
-     drivR.begin();
+    pinMode(LED_BUILTIN, OUTPUT);
 
-     rx.setup();
+    spinner.setUp();
+    drivL.begin();
+    drivR.begin();
 
-     imu.setUp();
-     imu.nullstill();
+    rx.setup();
 
-     Serial.println("Cheezslicer klar!");
- }
+    imu.setUp();
+    imu.nullstill();
 
- void loop(){
-     Cheezslicer.update();
- }
+    Serial.println("Cheezslicer klar!");
+}
+
+void loop(){
+    Cheezslicer.update();
+
+    digitalWrite(LED_BUILTIN, (millis() / 500) % 2);
+}
