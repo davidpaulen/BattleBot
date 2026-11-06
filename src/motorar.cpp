@@ -23,6 +23,10 @@ void BLDC_Motor::update(){
         esc.writeMicroseconds(persentToDuty(speedPersent));
         lastTimeUpdate = millis();
     }
+
+    if(speedPersent == 0 && targetSpeedPersent == 0){
+        stopp();
+    }
 }
 
 void BLDC_Motor::stopp(){
@@ -42,10 +46,6 @@ void BLDC_Motor::setUp(){
 
 int BLDC_Motor::persentToDuty(int persent){
     return 1000 + 10*persent;
-}
-
-int BLDC_Motor::dutyToPersent(int duty){
-    return (duty - 1000) / 10;
 }
 
 void BLDC_Motor::setSpeedPersent(int persent){
@@ -103,11 +103,12 @@ void Brushed_DC::begin() {
     pinMode(REN, OUTPUT);
     pinMode(LEN, OUTPUT);
 
+    // Set PWM til null før IBT-2 blir aktivert
+    stop();
+
     // Aktiverer begge sidene av IBT-2
     digitalWrite(REN, HIGH);
     digitalWrite(LEN, HIGH);
-
-    stop();
 }
 
 

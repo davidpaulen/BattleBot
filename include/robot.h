@@ -37,4 +37,14 @@ private:
     uint16_t SWC = 0;
     uint16_t SWD = 0;
     uint16_t SWA = 0;
+
+    void updateSpinner();
+
+    enum class SpinnerState{
+        WAIT_FOR_OFF,
+        READY,
+        RUNNING
+    };
+
+    SpinnerState spinnerState = SpinnerState::WAIT_FOR_OFF;
 };
